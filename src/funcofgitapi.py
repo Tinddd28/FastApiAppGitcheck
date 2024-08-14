@@ -1,5 +1,5 @@
 import requests
-from config.config import token
+from config.gitToken import token
 import re
 import zipfile
 from io import BytesIO

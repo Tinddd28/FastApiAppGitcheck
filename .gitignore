@@ -1,4 +1,4 @@
 *.json
 __pycache__
 venv/
-config/githubToken.py
+config/gitToken.py
