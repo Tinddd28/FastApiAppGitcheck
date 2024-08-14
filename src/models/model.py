@@ -3,19 +3,13 @@ from pydantic import BaseModel
 
 
 class requestModel(BaseModel):
-    user_id: int
     group_number: str
     login: str
     
     
 class check_tests(requestModel):
-    ok: bool = True
-    num: int
-    user_id: int
-    login: str
     number_of_lab: int
-    status: str
-    
+
     
 class exist_user(requestModel):
     ok: bool = True
@@ -24,3 +18,17 @@ class exist_user(requestModel):
     num_in_list: int
     status: str
     
+class return_info_lab(check_tests):
+    ok: bool = True
+    status: str
+    
+class fill_fields(BaseModel):
+    flag: list[int]
+    num_in_list: int
+    num_of_lab: int
+    group_number: int
+    
+    
+"""Этот файл используется для указания передаваемых в функции параметров и возвращаемых.
+Важно заметить, что первый класс, наследуется от класса basemodel, который, если перейти в документацию, позволяет передавать классы, 
+структуры различного вида и возвращать их же. Все остальные наследуется от других классов, копируя их поля."""

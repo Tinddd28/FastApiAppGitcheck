@@ -1,5 +1,5 @@
 import requests
-from config.githubToken import token
+from config.config import token
 import re
 import zipfile
 from io import BytesIO
@@ -99,7 +99,7 @@ def get_commit_files(repo, sha):
 
 
 
-def parse_test_paths(repo_name, text_in_cfg,  config_file="checktests.txt"):
+def parse_test_paths(repo_name, text_in_cfg,  config_file="src/checktests.txt"):
     """Парсинг конфигурационного файла для получения путей (директорий и файлов) и исключений."""
     with open(config_file, "r") as file:
         for line in file:
@@ -176,4 +176,21 @@ def check_changes(repo_name, sha, text_in_cfg):
     else:
         print("Тестовые файлы или директории не были изменены.")
         return 1
+
+def check_file_in_commit(repo, sha, filename):
+    """Проверить, есть ли файл с именем filename в указанном коммите."""
+    url = f"https://api.github.com/repos/{repo}/commits/{sha}"
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        commit_data = response.json()
+        files = commit_data.get('files', [])
+        for file_info in files:
+            if file_info['filename'] == filename:
+                return 0
+    return 1
+
+"""Здесь файл просто с набором функций для работы с гитапи, к ним есть небольшие комментарии, и если посмотреть немного и поразбираться, то можно понять,
+что происходит. Расписывать возле каждой функции, что она делает, я не хочу. По кратиким коментам и названиям, я думаю, все будет понятно))))"""
+
 
